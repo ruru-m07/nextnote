@@ -1,5 +1,3 @@
-"use server";
-
 import { z } from "zod";
 
 export const noteSchema = z.object({
@@ -10,7 +8,3 @@ export const noteSchema = z.object({
     message: "Description must be at least 3 characters.",
   }),
 });
-
-export const onSubmit = async (values: z.infer<typeof noteSchema>) => {
-  console.log(values);
-};

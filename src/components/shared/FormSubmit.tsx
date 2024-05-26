@@ -20,11 +20,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { noteSchema, onSubmit } from "@/actions/note.actions";
-
+import { noteSchema } from "@/schema/noteSchema";
+import { onSubmit } from "@/actions/note";
 
 export const FormSubmit = () => {
-
   const noteForm = useForm<z.infer<typeof noteSchema>>({
     resolver: zodResolver(noteSchema),
     defaultValues: {
@@ -41,7 +40,12 @@ export const FormSubmit = () => {
       <PopoverContent className="flex flex-col items-center">
         <Form {...noteForm}>
           <form
-            onSubmit={noteForm.handleSubmit(onSubmit)}
+            onSubmit={noteForm.handleSubmit((data) => {
+              onSubmit({
+                title: data.title,
+                description: data.description,
+              });
+            })}
             className="space-y-8"
           >
             <FormField
